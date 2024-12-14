@@ -6,7 +6,9 @@ MAS blocksWorld {
 
 //  There are 5 different solutions to a Blocks World problem in this example.
 //  Choose one of them below:
-    agents: agent;            // a straightforward Jason solution
+    agents: agent            // a straightforward Jason solution
+        agentArchClass     log.LoggerArch
+        agentClass    log.LoggerAg;
 //    agents: agent agent_o;  // tries to optimise the choice of tower to work on
 //    agents: agent agent_c;  // tries each tower concurrently
 //    agents: agent agent_p;  // same know-how as above but using plan patterns
