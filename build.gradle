@@ -1,0 +1,70 @@
+/*
+   Project template
+
+   Gradle build file for Jason Application
+   April 19, 2023 - 15:13:17
+*/
+
+defaultTasks 'run'
+
+apply plugin: 'java'
+
+// set version of group for your project
+//version '1.0'
+//group   'io.github.jason-lang'
+
+repositories {
+    maven { url "https://raw.githubusercontent.com/jacamo-lang/mvn-repo/master" }
+    maven { url "https://raw.githubusercontent.com/yan-elena/agent-logging/main" }
+    maven { url "https://repo.gradle.org/gradle/libs-releases" }
+    maven { url "https://jitpack.io" }
+    flatDir { dirs 'lib' }
+
+    mavenCentral()
+    //maven { url "https://raw.githubusercontent.com/jacamo-lang/mvn-repo/master" }
+    //maven { url "https://jade.tilab.com/maven/" }
+}
+
+dependencies {
+    implementation 'io.github.jason-lang:jason-interpreter:3.2.1-SNAPSHOT'
+    implementation 'io.github.yan-elena:agent-logging:0.1.5'
+
+    // to use locally installed jars:
+    //implementation fileTree(dir: 'lib', include: '*.jar')
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/agt'
+            srcDir 'src/java'
+            srcDir 'src/env'
+            //srcDir '.' // some old jason apps store .java files in project root
+        }
+        resources {
+            srcDir 'src/resources'
+        }
+    }
+}
+
+task run (type: JavaExec, dependsOn: 'classes') {
+    group = 'Jason'
+    description 'runs the application'
+    doFirst {
+        mkdir 'log'
+    }
+    mainClass = 'jason.infra.local.RunLocalMAS'
+    args = ['BlocksWorld.mas2j']
+	// options:
+	//     args = ['template.mas2j', '--debug', '--no-net', '--empty-mas']
+	//     args = ['template.mas2j', '--log-conf', 'l.p'] // to use file l.p to configure logging
+    classpath sourceSets.main.runtimeClasspath
+}
+
+task runJade (type: JavaExec, dependsOn: 'classes') {
+    group = 'Jason'
+    description 'runs the application with Jade infrastructure'
+    mainClass = 'jason.infra.jade.RunJadeMAS'
+    args = [ 'BlocksWorld.mas2j' ]
+    classpath sourceSets.main.runtimeClasspath
+}
