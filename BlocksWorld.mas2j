@@ -11,4 +11,6 @@ MAS blocksWorld {
 //    agents: agent agent_c;  // tries each tower concurrently
 //    agents: agent agent_p;  // same know-how as above but using plan patterns
 //    agents: agent agent_g;  // a version implementing the solution from a GOAL program
+
+    aslSourcePath: "src/agt";
 }
